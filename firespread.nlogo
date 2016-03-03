@@ -29,6 +29,7 @@ to go
       ]
     ]
   ]
+
   ;; ask the burning trees to set fire to any neighboring non-burning trees
   ask patches with [pcolor = red] [  ;; ask the burning trees
     ask neighbors4 with [pcolor = green] [  ;; ask their non-burning neighbor trees
@@ -36,6 +37,14 @@ to go
       ;; only burn if a random draw is greater than the probability of spread
       if random 100 < probability-of-spread [
         set pcolor red ;; to catch on fire
+      ]
+    ]
+
+    if patch-at-heading-and-distance wind-heading 1 != nobody [
+      ask patch-at-heading-and-distance wind-heading 1 [
+        if random 100 < wind-spread-probability * (wind-speed / 100) and (pcolor = green) [
+          set pcolor red
+        ]
       ]
     ]
 
@@ -144,7 +153,7 @@ probability-of-spread
 probability-of-spread
 0
 100
-85
+78
 1
 1
 %
@@ -233,7 +242,7 @@ wind-spread-probability
 wind-spread-probability
 0
 100
-50
+71
 1
 1
 NIL
